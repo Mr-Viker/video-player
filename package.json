@@ -1,7 +1,16 @@
 {
-  "name": "@viker/video-player",
+  "name": "@viker-lib/video-player",
   "version": "1.0.0",
   "description": "lightheight video player",
+  "keywords": [
+    "vue",
+    "video",
+    "lightheight"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
   "main": "dist/index.js",
   "style": "dist/index.css",
   "types": "dist/index.d.ts",
@@ -10,8 +19,6 @@
     "dev": "webpack serve --config ./build/webpack.dev.js --node-env=development",
     "build": "webpack --config ./build/webpack.prod.js --node-env=production"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.15.4"
   },
@@ -46,5 +53,19 @@
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.2.1",
     "webpack-merge": "^5.8.0"
-  }
+  },
+  "peerDependencies": {
+    "vue": "^2.6.x",
+    "vue-class-component": "^7.x",
+    "vue-property-decorator": "^8.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Mr-Viker/video-player.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "author": "Viker",
+  "license": "MIT"
 }
