@@ -184,8 +184,10 @@ export default class VideoPlayer extends Vue {
 <style lang='scss' scoped>
 .video-player {
     position: relative;
-    background-color: #000;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
+    background-color: #000;
 
     &.video--player--not-hover {
         .vp-control-bar {
