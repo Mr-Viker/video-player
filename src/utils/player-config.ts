@@ -14,8 +14,6 @@ export const defaultPlayerConfig: IPlayerConfig = {
         autoplay: true,
         loop: false,
         preload: 'auto',
-        src: '',
-        poster: '',
     },
     controlBar: { show: true },
     baseProgressBar: { 
