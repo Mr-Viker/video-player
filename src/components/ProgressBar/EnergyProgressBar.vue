@@ -68,6 +68,7 @@ export default class EnergyProgressBar extends Mixins(UsePlayer) {
     private refresh() {
         this.reset();
         this.initPath();
+        this.updateCurX(); // 主动触发一次更新curX 因为可能在暂停的时候获取到series了 这时候currentTime因为暂停未更新 会导致curX还是0而不是当前暂停时的进度
     }
     
     // 重置
