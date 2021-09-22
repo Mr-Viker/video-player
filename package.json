@@ -4,7 +4,7 @@
   "description": "lightheight video player",
   "main": "dist/index.js",
   "style": "dist/index.css",
-  "types": "types/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve --config ./build/webpack.dev.js --node-env=development",

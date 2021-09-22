@@ -1,6 +1,6 @@
 # video-player
 
-> Vue 2 + Typescript + Vue Cli + Vue-Property-Decorator
+> Vue 2 + Typescript + Vue-Property-Decorator + Webpack
 
 <br />
 
