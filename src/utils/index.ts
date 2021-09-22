@@ -5,10 +5,10 @@ import Vue from "vue";
  * @param comp 直接使用的组件
  * @param name 组件名称
  * @returns 可安装的组件
+ * 注：vue-property-decorator会将name放在comp.options下
  */
- export function withInstall(comp: any, name?: string) {
-    if(!comp.name && name) comp.name = name;
-    comp.install = (Vue: Vue) => Vue.component(comp.name, comp);
+export function withInstall(comp: any, name?: string) {
+    comp.install = (Vue: Vue) => Vue.component(name || comp.options.name || comp.name, comp);
     return comp;
 };
 

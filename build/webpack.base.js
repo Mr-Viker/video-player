@@ -1,8 +1,8 @@
 const path = require("path");
 const { VueLoaderPlugin } = require('vue-loader');
-// const TerserPlugin = require("terser-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const isProd = process.env.NODE_ENV === "production";
 const rootDir = path.resolve(__dirname, '../');
@@ -101,15 +101,17 @@ module.exports = {
         //     },
         // },
         // minimize: false,
-        // minimizer: [
-        //     // 取消提取LICENSE.txt (会导致使用vue-property-decorator的组件全局注册时无法正确解析)
-        //     // new TerserPlugin({
-        //     //     extractComments: false,
-        //     // }),
-        //     // 压缩css
-        //     new CssMinimizerPlugin(),
-        //     '...'
-        // ],
+        minimizer: [
+            new TerserPlugin({
+                extractComments: false, // 取消提取LICENSE.txt
+                terserOptions: {
+                    mangle: false, // 防止terser混淆代码后导致使用vue-property-decorator的组件name被破坏
+                },
+            }),
+            // 压缩css
+            new CssMinimizerPlugin(),
+            '...'
+        ],
     },
         
 }
