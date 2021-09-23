@@ -19,7 +19,7 @@
 <script lang='ts'>
 import { Vue, Component, Mixins, Watch } from "vue-property-decorator";
 import UsePlayer from '@/mixins/use-player';
-import { isEmptyValue, isFunction, isNumber } from "@/utils";
+import { deepClone, isEmptyValue, isFunction, isNumber } from "@/utils";
 import { secondToTime, toNumberWithKeep } from "@/utils/format";
 
 
@@ -32,12 +32,18 @@ export default class EnergyProgressBar extends Mixins(UsePlayer) {
     curX: number = 0; // 当前播放时间对应高能进度条的x位置
 
 
-    // 指标数据 根据配置(时间是否需要偏移)来生成格式化数据
+    // 指标数据 根据配置(时间是否需要向左偏移1s)来生成格式化数据
     get series() {
-        const offsetTime = this.Player.config.energyProgressBar.offsetTime;
-        if(isNumber(offsetTime)) this.Player.config.energyProgressBar.series.map(item => item[this.timeKey] += offsetTime);
-        return this.Player.config.energyProgressBar.series;
+        const epb = this.Player.config.energyProgressBar;
+        // 如何有设置偏移时间 则还需要判断是否最后一项是最后1s的数据 如果是 则偏移后再加上该最后一项来确保不会出现最后1s无value的情况
+        if(epb.series.length && epb.offsetTime) {
+            const lastItem = deepClone(epb.series.slice(-1)[0]);
+            epb.series.map(item => item[this.timeKey] += epb.offsetTime);
+            if(lastItem[this.timeKey] === Math.floor(this.duration)) epb.series.push(lastItem);
+        }
+        return epb.series;
     }
+
     // 指标数据的time名称
     get timeKey() { return this.Player.config.energyProgressBar.props.timeKey || 'time'; }
     // 指标数据的value名称

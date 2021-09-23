@@ -137,3 +137,9 @@ export function isEmptyValue(value: any) {
     }
     return false;
 }
+
+
+// 处理有极限值的情况
+export function getLimitValue(value: number, min: number, max: number) {
+    return value < min ? min : value > max ? max : value;
+}

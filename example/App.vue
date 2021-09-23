@@ -67,6 +67,7 @@ export default class App extends Vue {
         valueText: '高能值',
       },
       series: [],
+      // offsetTime: -1,
     },
     progressBar: { 
         show: true,
@@ -97,6 +98,26 @@ export default class App extends Vue {
   };
 
   created() {
+    this.updateSeires();
+  }
+
+  onClick() {
+    this.index = +!this.index;
+    this.playerConfig.video.src = this.srcs[this.index];
+    this.updateSeires();
+    console.log("click: ", this.index, this.playerConfig.video.src);
+  }
+
+  onPlay(ev) {
+    // console.log('onPlay: ', ev);
+  }
+
+  onTimeupdate(ev) {
+    // console.log('onTimeupdate: ', ev);
+  }
+
+
+  updateSeires() {
     setTimeout(() => {
       this.playerConfig.energyProgressBar.series = [
         { extValue: 1000, second: 1 },
@@ -110,23 +131,9 @@ export default class App extends Vue {
         { extValue: 300, second: 9 },
         { extValue: 1000, second: 10 },
         { extValue: 500, second: 11 },
-        { extValue: 600, second: 12 },
+        { extValue: 1000, second: 12 },
       ];
     }, 1000);
-  }
-
-  onClick() {
-    this.index = +!this.index;
-    this.playerConfig.video.src = this.srcs[this.index];
-    console.log("click: ", this.index, this.playerConfig.video.src);
-  }
-
-  onPlay(ev) {
-    // console.log('onPlay: ', ev);
-  }
-
-  onTimeupdate(ev) {
-    // console.log('onTimeupdate: ', ev);
   }
   
 }

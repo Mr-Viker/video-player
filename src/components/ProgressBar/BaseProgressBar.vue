@@ -24,7 +24,7 @@ import EnergyProgressBar from './EnergyProgressBar.vue';
 import ProgressBar from './ProgressBar.vue';
 import { EVENT_BASE_PROGRESS_BAR_MOUSE_DOWN, EVENT_BASE_PROGRESS_BAR_MOUSE_ENTER, EVENT_BASE_PROGRESS_BAR_MOUSE_LEAVE, EVENT_BASE_PROGRESS_BAR_MOUSE_MOVE, EVENT_BASE_PROGRESS_BAR_MOUSE_UP } from "@/utils/events";
 import { secondToTime } from "@/utils/format";
-import { isFunction } from "@/utils";
+import { getLimitValue, isFunction, isNumber } from "@/utils";
 
 
 @Component({
@@ -125,18 +125,34 @@ export default class BaseProgressBar extends Mixins(UsePlayer) {
 
         const { left, width, height } = this.baseProgressBarRef.getBoundingClientRect();
         const currentWidth = ev.clientX - left;
-        let time = Math.floor(currentWidth / width * this.duration);
-        time = time < 0 ? 0 : time > this.duration ? Math.floor(this.duration) : time;
-        const formatTime = secondToTime(time);
+
+        const videoTime = this.getVideoTime(currentWidth, width);
+        const originSeriesTime = this.getOriginSeriesTime(videoTime); // 目前只用来返回给用户自定义的format方法 暂无其他用处
         
-        let value = '-';
-        if(this.isShowEnergyProgressBar) value = this.energyProgressBarRef.getSeriesValueByTime(time);
+        // 如果这里使用originSeriesTime 虽然tooltips显示的时间和接口返回的数据时间对上了 但是显示的时间和video的时间对不上了 会相差offsetTime秒 所以为了和视频时间对上选择了videoTime
+        const formatTime = secondToTime(videoTime);
+        let value;
+        if(this.isShowEnergyProgressBar) value = this.energyProgressBarRef.getSeriesValueByTime(videoTime);
 
         const formatFn = this.Player.config.baseProgressBar.tooltips.format;
-        if(isFunction(formatFn)) this.tooltips.content = formatFn({time, formatTime, value}, this.Player.config);
+        if(isFunction(formatFn)) this.tooltips.content = formatFn({videoTime, originSeriesTime, formatTime, value}, this.Player.config);
 
         this.updateTooltipsStyle(currentWidth, width, height + 2); // 预留2px的bottom间隔
     }
+
+    // 获取视频当前实际时间 与数据无关 只和视频有关
+    private getVideoTime(currentWidth: number, width: number) {
+        let videoTime = Math.floor(currentWidth / width * this.duration);
+        return getLimitValue(videoTime, 0, Math.floor(this.duration));
+    }
+
+    // 获取视频当前时间减去offsetTime后的时间(即应该在该videoTime上显示的playerConfig传入的数据时间)
+    // 如果epb设置了offsetTime 则一开始series就会加上offsetTime 所以要减去offsetTime 此时才是playerConfig传入的原始数据对应的时间
+    private getOriginSeriesTime(videoTime: number) {
+        const offsetTime = this.Player.config.energyProgressBar.offsetTime;
+        return isNumber(offsetTime) ? getLimitValue(videoTime - offsetTime, 0, Math.floor(this.duration)) : videoTime;
+    }
+
 
     // 指定秒数后tooltips自动消失
     private hideTooltips(ev) {

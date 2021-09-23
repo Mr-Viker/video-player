@@ -62,7 +62,8 @@ interface IBaseProgressBar {
 
 // 格式化显示tooltips的数据
 interface ITooltipsFormatData {
-    time: number, // 当前鼠标对应的时间
+    videoTime: number, // 当前鼠标对应的时间
+    originSeriesTime: number, // 当前鼠标对应的时间减去offsetTime后的时间 对应的是playerConfig传入的时间 如果不设置offsetTime则和videoTimey相等
     formatTime: string, // 格式化成HH:mm:ss的时间
     value: number | string, // 高能值
 }
