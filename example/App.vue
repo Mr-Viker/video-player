@@ -68,6 +68,7 @@ export default class App extends Vue {
       },
       series: [],
       // offsetTime: -1,
+      // copyValueToZero: true,
     },
     progressBar: { 
         show: true,
@@ -129,7 +130,7 @@ export default class App extends Vue {
         { extValue: 1100, second: 7 },
         { extValue: 100, second: 8 },
         { extValue: 300, second: 9 },
-        { extValue: 1000, second: 10 },
+        { extValue: 0, second: 10 },
         { extValue: 500, second: 11 },
         { extValue: 1000, second: 12 },
       ];

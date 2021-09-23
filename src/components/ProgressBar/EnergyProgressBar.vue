@@ -21,6 +21,7 @@ import { Vue, Component, Mixins, Watch } from "vue-property-decorator";
 import UsePlayer from '@/mixins/use-player';
 import { deepClone, isEmptyValue, isFunction, isNumber } from "@/utils";
 import { secondToTime, toNumberWithKeep } from "@/utils/format";
+import { IEnergyProgressBar } from "@/types";
 
 
 @Component
@@ -32,14 +33,12 @@ export default class EnergyProgressBar extends Mixins(UsePlayer) {
     curX: number = 0; // 当前播放时间对应高能进度条的x位置
 
 
-    // 指标数据 根据配置(时间是否需要向左偏移1s)来生成格式化数据
+    // 指标数据 根据配置来生成格式化数据
     get series() {
         const epb = this.Player.config.energyProgressBar;
-        // 如何有设置偏移时间 则还需要判断是否最后一项是最后1s的数据 如果是 则偏移后再加上该最后一项来确保不会出现最后1s无value的情况
-        if(epb.series.length && epb.offsetTime) {
-            const lastItem = deepClone(epb.series.slice(-1)[0]);
-            epb.series.map(item => item[this.timeKey] += epb.offsetTime);
-            if(lastItem[this.timeKey] === Math.floor(this.duration)) epb.series.push(lastItem);
+        if(epb.series.length) {
+            this.setSeriesByOffsetTime(epb);
+            this.setSeriesByCopyValueToZero(epb);
         }
         return epb.series;
     }
@@ -116,10 +115,31 @@ export default class EnergyProgressBar extends Mixins(UsePlayer) {
     }
 
 
+    // 如何有设置偏移时间 则还需要判断是否最后一项是最后1s的数据 如果是 则偏移后再加上该最后一项来确保不会出现最后1s无value的情况
+    private setSeriesByOffsetTime(epb: IEnergyProgressBar) {
+        if(epb.offsetTime) {
+            const lastItem = deepClone(epb.series.slice(-1)[0]);
+            epb.series.map(item => item[this.timeKey] += epb.offsetTime);
+            if(lastItem[this.timeKey] === Math.floor(this.duration)) epb.series.push(lastItem);
+        }
+    }
+
+    // 如果copyValueToZero=true 则将第1s的数据项拷贝一份为第0s的数据
+    private setSeriesByCopyValueToZero(epb: IEnergyProgressBar) {
+        if(epb.copyValueToZero) {
+            const firstItem = deepClone(epb.series.slice(0, 1)[0]);
+            if(firstItem[this.timeKey] === 1) {
+                firstItem[this.timeKey] = 0;
+                epb.series.unshift(firstItem);
+            }
+        }
+    }
+
+
 
     // export 根据time获取value的方法
     getSeriesValueByTime(time: number, defaultValue: any = '-') {
-        return this.series.find(item => item[this.timeKey] === time)?.[this.valueKey] || defaultValue;
+        return this.series.find(item => item[this.timeKey] === time)?.[this.valueKey] ?? defaultValue;
     }
 
 }
