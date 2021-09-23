@@ -20,11 +20,14 @@ export const defaultPlayerConfig: IPlayerConfig = {
         show: true, 
         tooltips: {
             show: true,
-            format: ({formatTime, value}, config) => config.energyProgressBar.show ? `<div>时间: ${formatTime}</div><div>值: ${value}</div>` : formatTime,
+            format: ({formatTime, value}, config) => {
+                const { timeText = '时间', valueText = '值' } = config.energyProgressBar.props || {};
+                return config.energyProgressBar.show ? `<div>${timeText}: ${formatTime}</div><div>${valueText}: ${value}</div>` : formatTime;
+            },
         }
     },
     energyProgressBar: { 
-        show: false, 
+        show: false,
         series: [],
     },
     progressBar: { 

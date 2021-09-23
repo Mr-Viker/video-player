@@ -72,8 +72,10 @@ interface IEnergyProgressBar {
     show?: boolean,
     series?: any[], // 数据
     props?: {
-        timeKey?: string, // 数据的time名称
-        valueKey?: string, // 数据的value名称
+        timeKey?: string, // 数据的time对应的key
+        valueKey?: string, // 数据的value对应的key
+        timeText?: string, // 数据的time对应的显示文本
+        valueText?: string, // 数据的value对应的显示文本
     },
     offsetTime?: number, // 指定time的偏移量 如果接口返回的数据从第1s开始，默认情况下是右区间[1s,2s)；如果需要改成左区间[0s,1s)，则需要设置offsetTime: -1
     [key: string]: any,
@@ -88,6 +90,8 @@ interface IProgressBar {
         props?: {
             labelKey?: string, // 数据的label名称
             valueKey?: string, // 数据的value名称
+            labelText?: string, // 数据的label对应的显示文本
+            valueText?: string, // 数据的value对应的显示文本
             labelType?: 'time' | 'percent', // label的类型 具体时间 | 比例(包括百分比和小数 会自动计算)
         },
         data?: Record<string, any>[], // 数据

@@ -63,6 +63,8 @@ export default class App extends Vue {
       props: {
         timeKey: "second",
         valueKey: "extValue",
+        timeText: '进度',
+        valueText: '高能值',
       },
       series: [],
     },
