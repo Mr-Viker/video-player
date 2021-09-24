@@ -110,7 +110,7 @@ export default class ProgressBar extends Mixins(UsePlayer) {
             bottom: 0;
             height: 100%;
             // width: 50%;
-            background-color: #00a1d6;
+            background-color: $-color--active;
 
             .vp-progress-bar-dot {
                 position: absolute;

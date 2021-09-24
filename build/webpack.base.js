@@ -69,7 +69,12 @@ module.exports = {
             },
             {
                 test: /\.s[ac]ss$/,
-                use: [stylesHandler, 'css-loader', 'sass-loader'],
+                use: [stylesHandler, 'css-loader', {
+                    loader: 'sass-loader',
+                    options: {
+                        additionalData: "@import '@/styles/variable.scss';",
+                    }
+                }],
             },
             {
                 test: /\.css$/i,

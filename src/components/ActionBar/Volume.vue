@@ -133,7 +133,7 @@ export default class Volume extends Mixins(UsePlayer) {
                     bottom: 0;
                     width: 100%;
                     // height: 100%;
-                    background-color: #00a1d6;
+                    background-color: $-color--active;
 
                     .vp-volume-slide-bar-dot {
                         position: absolute;

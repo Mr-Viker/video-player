@@ -47,7 +47,7 @@ export default class ActionBar extends Mixins(UsePlayer) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: rgba(255, 255, 255, 1);
+    color: #fff;
 
     .vp-action-bar-l,
     .vp-action-bar-r {
