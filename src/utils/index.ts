@@ -114,6 +114,15 @@ export function isNumber(value: any) {
     return Object.prototype.toString.call(value) === '[object Number]';
 }
 
+// 是否是null
+export function isNull(value: any) {
+    return Object.prototype.toString.call(value) === '[object Null]';
+}
+export function isNotNull(value: any) {
+    return !isNull(value);
+}
+
+
 // 是否是百分数
 export function isPercent(value: any) {
     return /^\d+(\.\d+)?%$/.test(value);

@@ -49,6 +49,7 @@ export default class App extends Vue {
       src: this.srcs[0],
       poster: "//www.runoob.com/wp-content/themes/runoob/assets/img/404.jpg",
       autoplay: false,
+      loop: false,
     },
     // actionBar: {show: false},
     // baseProgressBar: {
