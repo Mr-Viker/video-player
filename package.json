@@ -16,8 +16,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack serve --config ./build/webpack.dev.js --node-env=development",
-    "build": "webpack --config ./build/webpack.prod.js --node-env=production"
+    "dev": "webpack serve --config ./build/webpack.dev.js --node-env=development --progress",
+    "build": "webpack --config ./build/webpack.prod.js --node-env=production --progress"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
