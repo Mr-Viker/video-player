@@ -68,6 +68,7 @@ export default class App extends Vue {
         valueText: '高能值',
       },
       series: [],
+      height: 40,
       // offsetTime: -1,
       // copyValueToZero: true,
     },

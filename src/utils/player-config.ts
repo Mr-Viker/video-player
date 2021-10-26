@@ -29,6 +29,7 @@ export const defaultPlayerConfig: IPlayerConfig = {
     energyProgressBar: { 
         show: false,
         series: [],
+        height: 24,
     },
     progressBar: { 
         show: true,

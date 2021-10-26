@@ -1,6 +1,6 @@
 <!-- 高能进度条 -->
 <template>
-    <div class="vp-energy-progress-bar-wrap">        
+    <div class="vp-energy-progress-bar-wrap" :style="epbWrapStyle">        
         <svg class="vp-energy-progress-bar" :viewBox='`0 0 ${VIEW_BOX_WIDTH} 100`' preserveAspectRatio="none" width='100%' height='100%' >
             <defs>
                 <clipPath id="curve-path"><path :d='pathD'></path></clipPath>
@@ -32,6 +32,8 @@ export default class EnergyProgressBar extends Mixins(UsePlayer) {
     pathD: string = ''; // 绘制贝塞尔曲线的字符串数组
     curX: number = 0; // 当前播放时间对应高能进度条的x位置
 
+    // 高能进度条样式
+    get epbWrapStyle() { return { height: `${this.Player.config.energyProgressBar.height}px` }; }
 
     // 指标数据 根据配置来生成格式化数据
     get series() {
@@ -149,6 +151,6 @@ export default class EnergyProgressBar extends Mixins(UsePlayer) {
 <style lang='scss' scoped>
 .vp-energy-progress-bar-wrap {
     width: 100%;
-    height: 24px;
+    // height: 24px;
 }
 </style>

@@ -80,6 +80,7 @@ export interface IEnergyProgressBar {
     },
     offsetTime?: number, // 指定time的偏移量 如果接口返回的数据从第1s开始，默认情况下是右区间[1s,2s)；如果需要改成左区间[0s,1s)，则需要设置offsetTime: -1
     copyValueToZero?: boolean, // 是否将第1s的数据value拷贝到第0s
+    height?: number, // 高度
     [key: string]: any,
 }
 
